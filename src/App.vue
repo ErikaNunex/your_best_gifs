@@ -10,8 +10,13 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-        <div>Quasar v{{ $q.version }}</div>
+        <q-toolbar-title>Your Best GIFs</q-toolbar-title>
+        <div class="q-mr-md">Erika Nunes</div>
+        <div class="q-mx-md">
+          <q-avatar>
+            <img src="https://picsum.photos/id/237/200/300" alt="Avatar" />
+          </q-avatar>
+        </div>
       </q-toolbar>
     </q-header>
 
