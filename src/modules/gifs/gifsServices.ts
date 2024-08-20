@@ -72,6 +72,18 @@ export class GifsService {
       console.error('Failed to find favorite GIFs:', error);
     }
   }
+
+  async removeFavoriteGifs(gifId: string): Promise<void> {
+    try {
+      const favoritesString = getFromLocalStorage('favoriteGifs');
+      const favorites = favoritesString ? favoritesString.split(',') : [];
+      const updatedFavorites = favorites.filter((id) => id !== gifId);
+      saveToLocalStorage('favoriteGifs', updatedFavorites.join(','));
+      await this.getFavoriteGifs();
+    } catch (error) {
+      console.error('Error removing GIF from favorites:', error);
+    }
+  }
 }
 
 export const gifsService: GifsService = new GifsService(gifsRepository);

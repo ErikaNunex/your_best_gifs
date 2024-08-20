@@ -25,8 +25,8 @@ onMounted(async () => {
   await gifsService.getFavoriteGifs();
 });
 
-async function removeFavorite(gifId: string) {
-  await gifsService.saveFavorite(gifId);
+function removeFavorite(gifId: string) {
+  gifsService.removeFavoriteGifs(gifId);
 }
 </script>
 
