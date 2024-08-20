@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-white rounded-md shadow-lg">
+  <div class="p-4 bg-white rounded-md">
     <div class="bg-gray-200 p-1 rounded-md">
       <q-img
         :src="props.gifUrl"
