@@ -32,9 +32,7 @@ export class GifsService {
       const favoritesString = getFromLocalStorage('favoriteGifs');
       const favorites = favoritesString ? favoritesString.split(',') : [];
       if (favorites.includes(gifId)) {
-        const updatedFavorites = favorites.filter((id) => id !== gifId);
-        saveToLocalStorage('favoriteGifs', updatedFavorites.join(','));
-        console.log(`GIF ${gifId} removed from favorites`);
+        console.log(`GIF ${gifId} já foi adiciondo aos favoritos`);
       } else {
         favorites.push(gifId);
         saveToLocalStorage('favoriteGifs', favorites.join(','));
