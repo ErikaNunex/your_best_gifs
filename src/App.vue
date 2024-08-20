@@ -31,19 +31,38 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <div class="bg-gray-200 p-4">
+        <h1 class="text-xl font-bold text-gray-800">{{ routerStore.title }}</h1>
+        <p class="text-gray-600 mb-6">{{ routerStore.caption }}</p>
+        <main>
+          <router-view />
+        </main>
+      </div>
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { useRouterStore } from './shared/stores/routerStore';
 import SideBarComponent from './shared/components/SideBarComponent.vue';
 
 const leftDrawerOpen = ref(false);
+const routerStore = useRouterStore();
+const route = useRoute();
+
+watch(
+  () => route.meta,
+  (meta) => {
+    const title = (meta.title as string) || '';
+    const caption = (meta.caption as string) || '';
+    routerStore.setPage(title, caption);
+  },
+  { immediate: true }
+);
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 </script>
-<style></style>
