@@ -15,7 +15,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/sobre',
-    component: () => import('./../../modules/developers/pages/AboutPage.vue'),
+    component: () => import('../../modules/users/pages/AboutPage.vue'),
   },
   {
     path: '/:catchAll(.*)*',
