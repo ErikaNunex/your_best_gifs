@@ -2,6 +2,9 @@ import { GifsRepository, gifsRepository } from './gifsReository';
 import { useGifsStore } from './stores';
 import { saveToLocalStorage, getFromLocalStorage } from 'src/boot/localStorage';
 import { GifInterface } from '@/modules/gifs/interfaces/GifsInterface';
+import { useAlertStore } from '../../shared/stores/alertStore';
+
+const alertStore = useAlertStore();
 const gifsStore = useGifsStore();
 
 export class GifsService {
@@ -19,8 +22,9 @@ export class GifsService {
       gifsStore.trendingGifs = response.data;
       gifsStore.pagination = response.pagination;
       gifsStore.msgRequest = response.meta.msg || '';
+      alertStore.showAlert('success', 'Sucesso ao buscar Trending GIFs!');
     } catch (error) {
-      gifsStore.msgRequest = 'Failed to load trending GIFs';
+      alertStore.showAlert('danger', 'Ocorreu um erroao buscar Trending GIFs.');
       console.error('Failed to load trending GIFs:', error);
     } finally {
       gifsStore.gifsTrendingLoading = false;
@@ -32,13 +36,23 @@ export class GifsService {
       const favoritesString = getFromLocalStorage('favoriteGifs');
       const favorites = favoritesString ? favoritesString.split(',') : [];
       if (favorites.includes(gifId)) {
-        console.log(`GIF ${gifId} já foi adiciondo aos favoritos`);
+        alertStore.showAlert(
+          'info',
+          `GIF ${gifId} já foi adicionado aos favoritos, você pode remove-lo na pagina "Favoritos"`
+        );
       } else {
         favorites.push(gifId);
         saveToLocalStorage('favoriteGifs', favorites.join(','));
-        console.log(`GIF ${gifId} added to favorites`);
+        alertStore.showAlert(
+          'success',
+          `GIF ${gifId} foi adicionado aos favoritos`
+        );
       }
     } catch (error) {
+      alertStore.showAlert(
+        'danger',
+        `Erro ao adicionar GIF ${gifId} aos favoritos`
+      );
       console.error('Error saving GIF to favorites:', error);
     }
   }
@@ -53,7 +67,10 @@ export class GifsService {
       gifsStore.pagination = response.pagination;
       gifsStore.msgRequest = response.meta.msg || '';
     } catch (error) {
-      gifsStore.msgRequest = 'Failed to search GIFs';
+      alertStore.showAlert(
+        'danger',
+        'Ocorreu um erro ao buscar Trending GIFs.'
+      );
       console.error('Failed to search GIFs:', error);
     } finally {
       gifsStore.gifsTrendingLoading = false;
@@ -67,6 +84,10 @@ export class GifsService {
       gifsStore.favorites = response.data;
       gifsStore.msgRequest = response.meta.msg || '';
     } catch (error) {
+      alertStore.showAlert(
+        'danger',
+        'Ocorreu um erro ao buscar GIFs favoritos.'
+      );
       console.error('Failed to find favorite GIFs:', error);
     }
   }
@@ -78,7 +99,12 @@ export class GifsService {
       const updatedFavorites = favorites.filter((id) => id !== gifId);
       saveToLocalStorage('favoriteGifs', updatedFavorites.join(','));
       await this.getFavoriteGifs();
+      alertStore.showAlert('info', `GIF ${gifId} foi removido dos favoritos`);
     } catch (error) {
+      alertStore.showAlert(
+        'danger',
+        'Ocorreu um erro ao remover GIFs favoritos.'
+      );
       console.error('Error removing GIF from favorites:', error);
     }
   }
@@ -88,7 +114,9 @@ export class GifsService {
       const response = await this.gifsRepository.fetchCategories();
       gifsStore.categories = response.data;
       gifsStore.msgRequest = response.meta.msg || '';
+      alertStore.showAlert('success', 'Sucesso ao buscar categotias!');
     } catch (error) {
+      alertStore.showAlert('danger', 'Ocorreu um erroao buscar categorias.');
       gifsStore.msgRequest = 'Failed to load categories';
       console.error('Failed to load categories:', error);
     } finally {

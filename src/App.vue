@@ -31,11 +31,12 @@
     </q-drawer>
 
     <q-page-container>
-      <div class="bg-gray-200 p-4">
+      <div class="bg-gray-200 p-4 relative min-h-screen">
         <h1 class="text-xl font-bold text-gray-800">{{ routerStore.title }}</h1>
         <p class="text-gray-600 mb-6">{{ routerStore.caption }}</p>
         <main>
           <router-view />
+          <AlertComponent class="fixed bottom-4 right-4" />
         </main>
       </div>
     </q-page-container>
@@ -47,6 +48,7 @@ import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRouterStore } from './shared/stores/routerStore';
 import SideBarComponent from './shared/components/SideBarComponent.vue';
+import AlertComponent from './shared/components/AlertComponent.vue';
 
 const leftDrawerOpen = ref(false);
 const routerStore = useRouterStore();
