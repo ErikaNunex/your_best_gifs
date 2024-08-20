@@ -1,4 +1,4 @@
-import { GifsRepository } from './gifsReository';
+import { GifsRepository, gifsRepository } from './gifsReository';
 import { useGifsStore } from './stores';
 
 export class GifsService {
@@ -11,7 +11,6 @@ export class GifsService {
   async fetchTrendingGifs(): Promise<void> {
     const gifsStore = useGifsStore();
 
-    // const params = gifsStore.gifsTrendingRequest?gifsStore.gifsTrendingRequest : undefined
     gifsStore.gifsTrendingLoading = true;
 
     try {
@@ -27,3 +26,5 @@ export class GifsService {
     }
   }
 }
+
+export const gifsService: GifsService = new GifsService(gifsRepository);
