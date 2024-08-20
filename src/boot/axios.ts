@@ -8,14 +8,13 @@ declare module '@vue/runtime-core' {
   }
 }
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
-// const apiKey = import.meta.env.VITE_GIPHY_API_KEY;
+const baseURL = 'https://api.giphy.com/v1';
+const apiKey = '4X08Obuajo3FEQQ8IS9ai9e9zLwNrua2';
 
 const api = axios.create({
   baseURL,
   headers: {
     'Content-Type': 'application/json',
-    // Authorization: `Bearer ${apiKey}`,
   },
 });
 
@@ -24,4 +23,4 @@ export default boot(({ app }) => {
   app.config.globalProperties.$api = api;
 });
 
-export { api };
+export { api, apiKey };

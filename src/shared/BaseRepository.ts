@@ -1,15 +1,12 @@
-import { api } from 'src/boot/axios';
+import { api, apiKey } from 'src/boot/axios';
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
-const apiKey = import.meta.env.VITE_GIPHY_API_KEY;
-
-export async function get<T>(
+export async function get<T, P = Record<string, string | number | boolean>>(
   endpoint: string,
-  params?: Record<string, any>
+  params?: P
 ): Promise<T> {
   try {
     const finalParams = { ...params, api_key: apiKey };
-    const response = await api.get<T>(`${baseUrl}${endpoint}`, {
+    const response = await api.get<T>(endpoint, {
       params: finalParams,
     });
     return response.data;
