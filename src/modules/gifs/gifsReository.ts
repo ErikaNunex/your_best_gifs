@@ -15,3 +15,5 @@ export class GifsRepository {
     return response;
   }
 }
+
+export const gifsRepository = new GifsRepository();
