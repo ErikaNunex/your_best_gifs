@@ -29,15 +29,15 @@ export class GifsService {
 
   saveFavorite(gifId: string): void {
     try {
-      const favorites = (getFromLocalStorage('favoriteGifs') as string[]) || [];
-
+      const favoritesString = getFromLocalStorage('favoriteGifs');
+      const favorites = favoritesString ? favoritesString.split(',') : [];
       if (favorites.includes(gifId)) {
         const updatedFavorites = favorites.filter((id) => id !== gifId);
-        saveToLocalStorage('favoriteGifs', updatedFavorites);
+        saveToLocalStorage('favoriteGifs', updatedFavorites.join(','));
         console.log(`GIF ${gifId} removed from favorites`);
       } else {
         favorites.push(gifId);
-        saveToLocalStorage('favoriteGifs', favorites);
+        saveToLocalStorage('favoriteGifs', favorites.join(','));
         console.log(`GIF ${gifId} added to favorites`);
       }
     } catch (error) {
@@ -59,6 +59,17 @@ export class GifsService {
       console.error('Failed to search GIFs:', error);
     } finally {
       gifsStore.gifsTrendingLoading = false;
+    }
+  }
+  async getFavoriteGifs(): Promise<void> {
+    try {
+      const favoriteIdsString = localStorage.getItem('favoriteGifs') || '';
+
+      const response = await gifsRepository.findFavoriteGifs(favoriteIdsString);
+      gifsStore.favorites = response.data;
+      gifsStore.msgRequest = response.meta.msg || '';
+    } catch (error) {
+      console.error('Failed to find favorite GIFs:', error);
     }
   }
 }

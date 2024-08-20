@@ -23,6 +23,13 @@ export class GifsRepository {
     );
     return response;
   }
+  async findFavoriteGifs(
+    gifsid: string
+  ): Promise<GifsTrendingResponseInterface> {
+    const params = { ids: gifsid };
+    const response = await get<GifsTrendingResponseInterface>('/gifs', params);
+    return response;
+  }
 }
 
 export const gifsRepository = new GifsRepository();

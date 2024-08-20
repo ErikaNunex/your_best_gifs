@@ -1,25 +1,48 @@
 <template>
-  <div class="bg-blue text-white text-center q-pa-md flex flex-center">
-    <div>
-      <div style="font-size: 30vh">fav</div>
-
-      <div class="text-h2" style="opacity: 0.4">fav page</div>
-
-      <q-btn
-        class="q-mt-xl"
-        color="white"
-        text-color="blue"
-        unelevated
-        to="/"
-        label="Go Home"
-        no-caps
+  <div class="p-4">
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+      <GifCard
+        v-for="gif in favorites"
+        :key="gif.id"
+        :gifUrl="gif.images.fixed_height_small.url"
+        :isFavoritePage="true"
+        @button-click="removeFavorite(gif.id)"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-defineOptions({
-  name: 'FavoritePage',
+import { computed, onMounted } from 'vue';
+import { useGifsStore } from '../stores';
+import GifCard from '../components/GifCard.vue';
+import { gifsService } from '../gifsServices';
+
+const gifsStore = useGifsStore();
+const favorites = computed(() => gifsStore.favorites);
+
+onMounted(async () => {
+  await gifsService.getFavoriteGifs();
 });
+
+async function removeFavorite(gifId: string) {
+  await gifsService.saveFavorite(gifId);
+}
 </script>
+
+<style scoped>
+.grid {
+  display: grid;
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
