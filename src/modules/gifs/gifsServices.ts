@@ -1,7 +1,7 @@
 import { GifsRepository, gifsRepository } from './gifsReository';
 import { useGifsStore } from './stores';
 import { saveToLocalStorage, getFromLocalStorage } from 'src/boot/localStorage';
-
+import { GifInterface } from '@/modules/gifs/interfaces/GifsInterface';
 const gifsStore = useGifsStore();
 
 export class GifsService {
@@ -81,6 +81,25 @@ export class GifsService {
     } catch (error) {
       console.error('Error removing GIF from favorites:', error);
     }
+  }
+  async fetchCategories(): Promise<void> {
+    gifsStore.categoriesLoading = true;
+    try {
+      const response = await this.gifsRepository.fetchCategories();
+      gifsStore.categories = response.data;
+      gifsStore.msgRequest = response.meta.msg || '';
+    } catch (error) {
+      gifsStore.msgRequest = 'Failed to load categories';
+      console.error('Failed to load categories:', error);
+    } finally {
+      gifsStore.categoriesLoading = false;
+    }
+  }
+  async fetchGifsByCategory(gifsCategory: GifInterface): Promise<void> {
+    gifsStore.gifsCategoryLoading = true;
+    gifsStore.gifsCategory = [];
+    gifsStore.gifsCategory.push(gifsCategory);
+    gifsStore.gifsCategoryLoading = false;
   }
 }
 

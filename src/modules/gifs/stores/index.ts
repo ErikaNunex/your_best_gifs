@@ -7,8 +7,12 @@ export const useGifsStore = defineStore('gifs', () => {
   const trendingGifs = ref<Array<GifInterface>>([]);
   const favorites = ref<Array<GifInterface>>([]);
   const categories = ref<Array<CategoryInterface>>([]);
+  const gifsCategory = ref<Array<GifInterface>>([]);
+  const categoryName = ref<string>('');
+  const categoriesLoading = ref<boolean>(false);
   const gifsTrendingLoading = ref<boolean>(false);
   const msgRequest = ref<string>('');
+  const gifsCategoryLoading = ref<boolean>(false);
   const pagination = ref<PaginationInterface>({
     offset: 0,
     total_count: 0,
@@ -21,5 +25,9 @@ export const useGifsStore = defineStore('gifs', () => {
     gifsTrendingLoading,
     msgRequest,
     pagination,
+    gifsCategory,
+    categoriesLoading,
+    categoryName,
+    gifsCategoryLoading,
   };
 });

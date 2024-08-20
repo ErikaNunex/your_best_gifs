@@ -2,8 +2,14 @@ import { get } from 'src/shared/BaseRepository';
 import { GifInterface } from '@/modules/gifs/interfaces/GifsInterface';
 import { PaginationInterface } from '@/shared/interfaces/PaginationInterface';
 import { ResponseInterface } from '@/shared/interfaces/ResponseInterface';
+import { CategoryInterface } from './interfaces/CategoryInterface';
 interface GifsTrendingResponseInterface {
   data: GifInterface[];
+  pagination: PaginationInterface;
+  meta: ResponseInterface;
+}
+interface CategoriesResponseInterface {
+  data: CategoryInterface[];
   pagination: PaginationInterface;
   meta: ResponseInterface;
 }
@@ -28,6 +34,10 @@ export class GifsRepository {
   ): Promise<GifsTrendingResponseInterface> {
     const params = { ids: gifsid };
     const response = await get<GifsTrendingResponseInterface>('/gifs', params);
+    return response;
+  }
+  async fetchCategories(): Promise<CategoriesResponseInterface> {
+    const response = await get<CategoriesResponseInterface>('/gifs/categories');
     return response;
   }
 }
