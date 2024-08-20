@@ -1,4 +1,4 @@
-import { UserInterface } from '@/modules/users/interfaces/UserInterface';
+import { UserInterface } from './UserInterface';
 import { ImagesInterface } from './ImageInterface';
 
 export interface GifInterface {
