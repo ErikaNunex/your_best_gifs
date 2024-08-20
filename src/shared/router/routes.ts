@@ -27,7 +27,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/sobre',
-    component: () => import('../../modules/users/pages/AboutPage.vue'),
+    component: () => import('../../modules/developers/pages/AboutPage.vue'),
     meta: {
       title: 'Sobre',
       caption: 'Sobre o desenvolvedor',
