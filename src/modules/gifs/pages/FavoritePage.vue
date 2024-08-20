@@ -1,6 +1,6 @@
 <template>
-  <div class="p-4">
-    <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+  <div class="bg-white p-4">
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-4 flex items-baseline">
       <GifCard
         v-for="gif in favorites"
         :key="gif.id"
