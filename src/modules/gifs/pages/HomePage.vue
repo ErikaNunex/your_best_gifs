@@ -29,8 +29,8 @@ onMounted(async () => {
   await gifsService.fetchTrendingGifs();
 });
 
-function saveFavorite(gifId: string) {
-  console.log(gifId);
+async function saveFavorite(gifId: string) {
+  await gifsService.saveFavorite(gifId);
 }
 </script>
 
