@@ -27,9 +27,18 @@
 
 - **Node.js**: Certifique-se de ter o Node.js instalado. [Download Node.js](https://nodejs.org/).
 - **Quasar CLI**: Instale o Quasar CLI globalmente.
-  ```bash
-  npm install -g @quasar/cli
-  ```
+
+Windows:
+
+```bash
+npm install -g @quasar/cli
+```
+
+Linux:
+
+```bash
+sudo npm install -g @quasar/cli
+```
 
 ### Passos para Instalação
 
